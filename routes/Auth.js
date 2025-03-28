@@ -5,6 +5,9 @@ import { upload } from '../middlewares/Mluter.js'
 const AuthRoutes=express.Router()
 
 AuthRoutes.post('/register',upload.single('profile'),Register)
+AuthRoutes.get('/register', (req, res) => {
+    res.send("register");
+})
 AuthRoutes.post('/login', Login)
 AuthRoutes.get('/get_user', GetUser)
 
