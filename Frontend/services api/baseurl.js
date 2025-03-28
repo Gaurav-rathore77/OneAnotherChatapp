@@ -1,7 +1,7 @@
 
 
 
-export const  Baseurl = 'https://oneanotherchatapp.onrender.com/'
+export const  Baseurl = 'https://oneanotherchatapp.onrender.com'
 
 
 
