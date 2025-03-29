@@ -20,50 +20,45 @@ export default function Register() {
  
 
   // Regsiter api here 
-  const handlsubmit = async (e) => {
-    e.preventDefault();
-    try {
-         const formadata = new FormData();
-         formadata.append('name',user.name);
-         formadata.append('email',user.email);
-         formadata.append('password',user.password);
-         formadata.append('profile',user.profile)
-          
-         const res =  await axios.post(`${Baseurl}/api/auth/register`,formadata,{
-               headers:{
-                "Content-Type":"multipart/form-data",
-               }
-              
-         })
-        const data =  await res.data;
-          
-           if (res.status === 200) {
-            toast.success(data.message)
-            setuser({
-              name: '',
-              email: '',
-              password: '',
-              profile: null,
-            })
-            usenagi('/login')
-           }
-
-      
-         
-            
-        
-
-    } catch (error) {
-      if (error && error.response && error.response.data) {
-        toast.error(error.response.data.message)
-      }
-       console.log(error)
-    }
-    
-   
+const handlsubmit = async (e) => {
+  e.preventDefault();
+  
+  // Ensure profile is not null before appending
+  if (!user.profile) {
+    return toast.error("Please upload a profile picture.");
   }
 
+  try {
+    const formData = new FormData();
+    formData.append('name', user.name);
+    formData.append('email', user.email);
+    formData.append('password', user.password);
+    formData.append('profile', user.profile); // Ensure correct key name
 
+    const res = await axios.post(`${Baseurl}/api/auth/register`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    const data = await res.data;
+
+    if (res.status === 200) {
+      toast.success(data.message);
+      setuser({
+        name: '',
+        email: '',
+        password: '',
+        profile: null,
+      });
+      usenagi('/login');
+    }
+
+  } catch (error) {
+    console.error("Axios Error:", error);
+    toast.error(error.response?.data?.message || "Registration failed.");
+  }
+};
 
   // handle input value
   const handlinput = (e) => {

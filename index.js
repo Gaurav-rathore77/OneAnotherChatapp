@@ -21,9 +21,11 @@ DbCon();
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cors({
-  origin: 'https://sparkly-sunshine-fb239c.netlify.app', // Allow only your Netlify frontend
-  credentials: true, // If using cookies/sessions
+  origin: ['https://sparkly-sunshine-fb239c.netlify.app', 'https://amazing-trifle-41fab0.netlify.app'],
+  methods: ['GET', 'POST'],
+  credentials: true,
 }));
+
 
 app.use('/api/Auth', AuthRoutes);
 app.use('/api/messages', MessageRoutes);
